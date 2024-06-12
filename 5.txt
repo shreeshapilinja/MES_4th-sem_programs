@@ -1,0 +1,14 @@
+;Write a program to find the square of number (1 to 10) using look-up table.
+	AREA FIVE, CODE, READONLY
+	MOV R0,#5
+	MOV R1,#4
+	MUL R1,R0,R1
+	SUB R1,R1,#4
+	LDR R2,=ARRAY
+	ADD R1,R2,R1
+	LDR R3,[R1]
+ARRAY
+	DCD 1,4,9,16,25,36,49,64,81,100
+	ALIGN
+STOP B STOP
+	END

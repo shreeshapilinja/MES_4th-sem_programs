@@ -1,0 +1,37 @@
+//frc-5 -> DAC module connection ,  cro and 2 wires
+//CRO ,DaC module ,arm 7 trainer kit,probes,FRC cables,2 wire in one ,power adapter,usb connector
+
+//square wave
+#include<LPC214X.H>
+unsigned int j;
+int main()
+{
+	int value = 0x3ff;
+	PINSEL1 = 0x00080000;
+	while(1)
+	{
+		DACR = value<<6;
+		for(j=0;j<=10000;j++);
+		DACR = 0;
+		for(j=0;j<=10000;j++);
+	}
+}
+
+// triangular wave
+#include<LPC214X.H>
+unsigned int j;
+int main()
+{
+	PINSEL1 = 0x00080000;
+	while(1)
+	{
+		for(j=0;j<1023;j++){
+			DACR = j<<6;
+		}
+		for(j=1023;j>0;j--){
+			DACR = j<<6;
+		}
+	}
+}
+
+

@@ -1,0 +1,47 @@
+//frc-1 -> stepper motor
+//required -> stepper motor,arm 7 trainer kit,FRC cable,power adapter,usb connector
+#include <LPC214x.H>
+#define MOTOR_PORT(DATA)(DATA<<16)
+unsigned char COUNT=0;
+unsigned int j=0;
+unsigned int CLOCK[4]={0x03,0x09,0x0c,0x06};
+unsigned int ANTICLOCK[4]={0x06,0x0c,0x09,0x03};
+void DELAY_1S(unsigned int n)
+{
+	unsigned int i,j;
+	for(i=1;i<=n;i++)
+	for(j=0;j<=10000;j++);
+}
+void CLOCKWISE(unsigned int STEP, unsigned int TIME)
+{
+	for(j=0;j<=STEP;j++)
+	{
+		IO0PIN=MOTOR_PORT(CLOCK[COUNT]);
+		COUNT++;
+		DELAY_1S(TIME);
+		if(COUNT==4)
+			COUNT=0;
+	}
+}
+void ANTICLOCKWISE(unsigned int STEP, unsigned int TIME)
+{
+	for(j=0;j<=STEP;j++)
+	{
+		IO0PIN=MOTOR_PORT(ANTICLOCK[COUNT]);
+		COUNT++;
+		DELAY_1S(TIME);
+		if(COUNT==4)
+			COUNT=0;
+	}
+}
+int main()
+{
+	unsigned int i=0;
+	IO0DIR=0X000F0000;
+	while(i<10)
+	{
+		CLOCKWISE(200,10);
+		ANTICLOCKWISE(200,10);
+		i++;
+	}
+}

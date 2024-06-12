@@ -1,0 +1,30 @@
+//frc-4 DC motor connection
+//required --> frc cable,dc motor,arm7 trainer kit,power adapter,usb connector
+#include<LPC214X.H>
+void clockwise(void);
+void anticlockwise(void);
+unsigned int j=0;
+int main(void)
+{
+	IO0DIR = 0x00000009;
+	IO0SET = 0x00000002;
+	while(1)
+	{
+		clockwise();
+		for(j=0;j<=100000;j++);
+		anticlockwise();
+		for(j=0;j<=100000;j++);
+	}
+}
+void clockwise(void)
+{
+	IO0CLR = 0x00000009;
+	for(j=0;j<=40000;j++);
+	IO0SET = 0x00000008;
+}
+void anticlockwise(void)
+{
+	IO0CLR = 0x00000009;
+	for(j=0;j<=40000;j++);
+	IO0SET = 0x00000001;
+}

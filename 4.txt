@@ -1,0 +1,15 @@
+;Write a program to add an array of 16 bit numbers and store the 32 bit result in internal RAM
+	AREA FOUR, CODE, READONLY
+	MOV R0,#4
+	MOV R1,#0
+	LDR R2,=ARRAY
+LOOP LDR R3,[R2],#4
+	ADD R1,R1,R3
+	SUB R0,R0,#1
+	CMP R0,#0
+	BNE LOOP
+ARRAY
+	DCD 1,9,8,7
+	ALIGN
+STOP B STOP
+	END

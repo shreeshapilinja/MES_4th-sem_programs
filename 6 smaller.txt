@@ -1,0 +1,19 @@
+;Write a program to find the largest number in an array of 32 numbers.
+	AREA SIXA, CODE, READONLY
+	MOV R0,#6
+	LDR R1,=ARRAY
+	LDR R2,[R1]
+LOOP ADD R1,R1,#4
+	LDR R3,[R1]
+	CMP R2,R3
+	BLO DOWN
+	MOV R2,R3
+DOWN
+	SUB R0,R0,#1
+	CMP R0,#0
+	BNE LOOP
+ARRAY
+	DCD 21,4,99,196,25,136,49
+	ALIGN
+STOP B STOP
+	END
