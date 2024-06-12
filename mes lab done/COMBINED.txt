@@ -1,0 +1,201 @@
+;Write a program to multiply two 16 bit binary numbers
+	AREA ONE, CODE, READONLY
+	LDR R0,=0X00000002
+	LDR R1,=0X00000004
+	MUL R2,R1,R0
+STOP B STOP
+	END
+
+
+
+;Write a program to find the sum of first 10 integer numbers.
+	AREA TWO, CODE, READONLY
+	MOV R0,#10
+	MOV R1,#0
+LOOP 	ADD R1,R0,R1
+	SUB R0,R0,#1  ;OR  SUBS
+	CMP R0,#0     ;OR  BNE LOOP
+	BNE LOOP	  ;OR
+STOP B STOP
+	END
+
+
+
+;Write a program to find factorial of a number
+	AREA THREE, CODE, READONLY
+	MOV R0,#4
+	MOV R1,#1
+LOOP 	MUL R1,R0,R1
+	SUB R0,R0,#1
+	CMP R0,#1
+	BNE LOOP
+STOP B STOP
+	END
+
+
+
+;Write a program to add an array of 16 bit numbers and store the 32 bit result in internal RAM
+	AREA FOUR, CODE, READONLY
+	MOV R0,#4
+	MOV R1,#0
+	LDR R2,=ARRAY
+LOOP 	LDR R3,[R2],#4
+	ADD R1,R1,R3
+	SUB R0,R0,#1
+	CMP R0,#0
+	BNE LOOP
+ARRAY
+	DCD 1,9,8,7
+	ALIGN
+STOP B STOP
+	END
+
+
+;Write a program to find the square of number (1 to 10) using look-up table.
+	AREA FIVE, CODE, READONLY
+	MOV R0,#5
+	MOV R1,#4
+	MUL R1,R0,R1
+	SUB R1,R1,#4
+	LDR R2,=ARRAY
+	ADD R1,R2,R1
+	LDR R3,[R1]
+ARRAY
+	DCD 1,4,9,16,25,36,49,64,81,100
+	ALIGN
+STOP B STOP
+	END
+
+;Write a program to find the largest number in an array of 32 numbers.
+	AREA SIXA, CODE, READONLY
+	MOV R0,#6
+	LDR R1,=ARRAY
+	LDR R2,[R1]
+LOOP 	ADD R1,R1,#4
+	LDR R3,[R1]
+	CMP R2,R3
+	BHI DOWN
+	MOV R2,R3
+DOWN
+	SUB R0,R0,#1
+	CMP R0,#0
+	BNE LOOP
+ARRAY
+	DCD 21,4,99,196,25,136,49
+	ALIGN
+STOP B STOP
+	END
+
+
+;Write a program to find the smallest number in an array of 32 numbers.
+	AREA SIXB, CODE, READONLY
+	MOV R0,#6
+	LDR R1,=ARRAY
+	LDR R2,[R1]
+LOOP 	ADD R1,R1,#4
+	LDR R3,[R1]
+	CMP R2,R3
+	BLO DOWN
+	MOV R2,R3
+DOWN
+	SUB R0,R0,#1
+	CMP R0,#0
+	BNE LOOP
+ARRAY
+	DCD 21,4,99,196,25,136,49
+	ALIGN
+STOP B STOP
+	END
+
+
+
+;Write a program to arrange a series of 32 bit numbers in ascending order.
+	AREA SEVENA, CODE, READONLY
+	MOV R0,#4
+	MOV R1,R0
+UP	MOV R2,#0X40000000
+LOOP 	LDR R3,[R2],#4
+	LDR R4,[R2]
+	CMP R3,R4
+	BLO DOWN
+	STR R3,[R2],#-4
+	STR R4,[R2],#4
+DOWN
+	SUB R0,R0,#1
+	CMP R0,#0
+	BNE LOOP
+	MOV R0,R1
+	SUB R1,R1,#1
+	CMP R1,#0
+	BNE UP
+STOP B STOP
+	END
+
+
+
+
+;Write a program to arrange a series of 32 bit numbers in descending order.
+	AREA SEVENB, CODE, READONLY
+	MOV R0,#4
+	MOV R1,R0
+UP	MOV R2,#0X40000000
+LOOP 	LDR R3,[R2],#4
+	LDR R4,[R2]
+	CMP R3,R4
+	BHI DOWN
+	STR R3,[R2],#-4
+	STR R4,[R2],#4
+DOWN
+	SUB R0,R0,#1
+	CMP R0,#0
+	BNE LOOP
+	MOV R0,R1
+	SUB R1,R1,#1
+	CMP R1,#0
+	BNE UP
+STOP B STOP
+	END
+
+
+
+
+
+
+;Write a program to count the number of ones and zeros in 1 consecutive memory locations.
+	AREA EIGHTA, CODE, READONLY
+	MOV R0,#32
+	LDR R1,=ARRAY
+	LDR R2,[R1]
+LOOP 	RORS R2,#1
+	ADDCS R3,R3,#1
+	ADDCC R4,R4,#1
+	SUB R0,R0,#1
+	CMP R0,#0
+	BNE LOOP
+STOP B STOP
+ARRAY
+	DCD 4
+	ALIGN
+	END
+
+
+;Write a program to count the number of ones and zeros in two consecutive memory locations.
+	AREA EIGHTB, CODE, READONLY
+	MOV R5,#2
+	LDR R1,=ARRAY
+UP	LDR R2,[R1],#4
+	MOV R0,#32
+LOOP 	RORS R2,#1
+	ADDCS R3,R3,#1
+	ADDCC R4,R4,#1
+	SUB R0,R0,#1
+	CMP R0,#0
+	BNE LOOP
+	SUB R5,R5,#1
+	CMP R5,#0
+	BNE UP
+STOP B STOP
+ARRAY
+	DCD 4,4
+	ALIGN
+	END

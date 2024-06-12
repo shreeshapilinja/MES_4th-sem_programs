@@ -1,0 +1,16 @@
+;Write a program to count the number of ones and zeros in 1 consecutive memory locations.
+	AREA EIGHTA, CODE, READONLY
+	MOV R0,#32
+	LDR R1,=ARRAY
+	LDR R2,[R1]
+LOOP 	RORS R2,#1
+	ADDCS R3,R3,#1
+	ADDCC R4,R4,#1
+	SUB R0,R0,#1
+	CMP R0,#0
+	BNE LOOP
+STOP B STOP
+ARRAY
+	DCD 4
+	ALIGN
+	END

@@ -1,0 +1,7 @@
+;Write a program to multiply two 16 bit binary numbers
+	AREA ONE, CODE, READONLY
+	LDR R0,=0X00000002
+	LDR R1,=0X00000004
+	MUL R2,R1,R0
+STOP B STOP
+	END
